@@ -6,6 +6,7 @@ import com.skypro.employees_mockito_hw.exceptions.EmployeeNotFoundException;
 import com.skypro.employees_mockito_hw.exceptions.EmployeeStorageIsFullException;
 import com.skypro.employees_mockito_hw.exceptions.InvalidInputException;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isAlpha;
 
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final static int maxQuantity = 10;
     private final static List<Employee> employees = new ArrayList<>();

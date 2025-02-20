@@ -20,6 +20,11 @@ public class DepartmentController {
         this.employeeService = employeeService;
     }
 
+    @GetMapping
+    public String welcome() {
+        return departmentService.welcome();
+    }
+
     @GetMapping("{id:\\d+}/employees")
     public List<Employee> getEmployeesByDep(@PathVariable int id) {
         return departmentService.getEmployeesByDep(id);
@@ -64,5 +69,13 @@ public class DepartmentController {
                                    @RequestParam int department,
                                    @RequestParam int salary) {
         return employeeService.removeEmployee(lastName, firstName, department, salary);
+    }
+
+    @GetMapping("/find")
+    public Employee findEmployee(@RequestParam String lastName,
+                                 @RequestParam String firstName,
+                                 @RequestParam int department,
+                                 @RequestParam int salary) {
+        return employeeService.findEmployee(lastName, firstName, department, salary);
     }
 }

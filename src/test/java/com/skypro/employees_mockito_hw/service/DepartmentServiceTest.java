@@ -37,12 +37,20 @@ class DepartmentServiceTest {
         actualEmployees.add(employee1);
         actualEmployees.add(employee2);
         actualEmployees.add(employee3);
+    }
 
-        when(employeeServiceMock.getAllEmployees()).thenReturn(actualEmployees);
+    @Test
+    void whenDepartmentNotPassed() {
+        String expected = "Welcome To The Jungle!";
+        String actual = out.welcome();
+
+        assertEquals(expected, actual);
     }
 
     @Test
     void whenGetEmployeesByDep() {
+
+        when(employeeServiceMock.getAllEmployees()).thenReturn(actualEmployees);
 
         expectedEmployees.add(employee1);
         expectedEmployees.add(employee2);
@@ -56,6 +64,8 @@ class DepartmentServiceTest {
     @Test
     void whenGetEmployeesByAnotherDep() {
 
+        when(employeeServiceMock.getAllEmployees()).thenReturn(actualEmployees);
+
         expectedEmployees.add(employee3);
 
         List<Employee> expected = expectedEmployees;
@@ -65,7 +75,20 @@ class DepartmentServiceTest {
     }
 
     @Test
+    void whenDepartmentNotExist() {
+
+        when(employeeServiceMock.getAllEmployees()).thenReturn(actualEmployees);
+
+        List<Employee> expected = expectedEmployees;
+        List<Employee> actual = out.getEmployeesByDep(3);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void whenSumSalary() {
+
+        when(employeeServiceMock.getAllEmployees()).thenReturn(actualEmployees);
 
         int expected = 30000;
         int actual = out.sumSalary(1);
@@ -76,6 +99,8 @@ class DepartmentServiceTest {
     @Test
     void whenMaxSalary() {
 
+        when(employeeServiceMock.getAllEmployees()).thenReturn(actualEmployees);
+
         Employee expected = employee2;
         Employee actual = out.maxSalary(1);
 
@@ -84,6 +109,8 @@ class DepartmentServiceTest {
 
     @Test
     void whenCollectionIsEmpty() {
+
+        when(employeeServiceMock.getAllEmployees()).thenReturn(actualEmployees);
 
         actualEmployees.remove(employee1);
         actualEmployees.remove(employee2);
@@ -98,6 +125,8 @@ class DepartmentServiceTest {
     @Test
     void minSalary() {
 
+        when(employeeServiceMock.getAllEmployees()).thenReturn(actualEmployees);
+
         Employee expected = employee1;
         Employee actual = out.minSalary(1);
 
@@ -106,6 +135,8 @@ class DepartmentServiceTest {
 
     @Test
     void allEmployeesByDeps() {
+
+        when(employeeServiceMock.getAllEmployees()).thenReturn(actualEmployees);
 
         expectedEmployees.add(employee1);
         expectedEmployees.add(employee2);

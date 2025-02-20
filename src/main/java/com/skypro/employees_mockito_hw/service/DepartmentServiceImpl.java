@@ -18,6 +18,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    public String welcome() {
+        return "Welcome To The Jungle!";
+    }
+
+    @Override
     public List<Employee> getEmployeesByDep(int id) {
         List<Employee> employees = new ArrayList<>(employeeService.getAllEmployees());
         return employees.stream()
