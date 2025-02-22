@@ -5,6 +5,7 @@ import com.skypro.employees_mockito_hw.exceptions.EmployeeAlreadyAddedException;
 import com.skypro.employees_mockito_hw.exceptions.EmployeeNotFoundException;
 import com.skypro.employees_mockito_hw.exceptions.EmployeeStorageIsFullException;
 import com.skypro.employees_mockito_hw.exceptions.InvalidInputException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -21,8 +22,16 @@ class EmployeeServiceTest {
     private List<Employee> employees = new ArrayList<Employee>();
     private Employee employee1 = new Employee("Ivanov", "Ivan", 1, 10000);
 
+    @AfterEach
+    public void resetSettings() {
+        if (employeeService.getAllEmployees().contains(employee1)) {
+            employeeService.removeEmployee("Ivanov", "Ivan", 1, 10000);
+        }
+    }
+
     @Test
     void whenAddEmployee() {
+
         Employee expected = employee1;
         Employee actual = employeeService.addEmployee("Ivanov", "Ivan", 1, 10000);
 
@@ -42,14 +51,14 @@ class EmployeeServiceTest {
         employeeService.addEmployee("Sergeev", "Sergey", 1, 20000);
         employeeService.addEmployee("Nikolaev", "Nikolay", 2, 30000);
         employeeService.addEmployee("Nikitin", "Nikita", 2, 20000);
-        employeeService.addEmployee("A", "A", 2, 20000);
-        employeeService.addEmployee("B", "B", 2, 20000);
-        employeeService.addEmployee("C", "C", 2, 20000);
-        employeeService.addEmployee("D", "D", 2, 20000);
-        employeeService.addEmployee("E", "E", 2, 20000);
-        employeeService.addEmployee("G", "G", 2, 20000);
+        employeeService.addEmployee("Potapov", "Oleg", 2, 20000);
+        employeeService.addEmployee("Markov", "Mark", 2, 20000);
+        employeeService.addEmployee("Saldin", "Maxim", 2, 20000);
+        employeeService.addEmployee("Allegrova", "Anastasia", 2, 20000);
+        employeeService.addEmployee("Lebedev", "Dmitry", 2, 20000);
+        employeeService.addEmployee("Medvedev", "Konstantin", 2, 20000);
 
-        assertThrows(EmployeeStorageIsFullException.class, () -> employeeService.addEmployee("F", "F", 2, 20000));
+        assertThrows(EmployeeStorageIsFullException.class, () -> employeeService.addEmployee("Chekhov", "Alexandr", 2, 20000));
     }
 
     @Test
@@ -64,7 +73,8 @@ class EmployeeServiceTest {
         employeeService.addEmployee("Ivanov", "Ivan", 1, 10000);
 
         Employee expected = employee1;
-        Employee actual = new Employee("Ivanov", "Ivan", 1, 10000);
+
+        Employee actual = employeeService.removeEmployee("Ivanov", "Ivan", 1, 10000);
 
         assertEquals(expected, actual);
     }
@@ -76,17 +86,17 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void findEmployee() {
+    void whenFindEmployee() {
         employeeService.addEmployee("Ivanov", "Ivan", 1, 10000);
 
         Employee expected = employee1;
-        Employee actual = new Employee("Ivanov", "Ivan", 1, 10000);
+        Employee actual = employeeService.findEmployee("Ivanov", "Ivan", 1, 10000);
 
         assertEquals(expected, actual);
     }
 
     @Test
-    void getAllEmployees() {
+    void whenGetAllEmployees() {
 
         employees.add(employee1);
         employeeService.addEmployee("Ivanov", "Ivan", 1, 10000);

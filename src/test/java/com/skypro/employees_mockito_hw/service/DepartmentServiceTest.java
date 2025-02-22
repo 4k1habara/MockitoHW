@@ -1,6 +1,7 @@
 package com.skypro.employees_mockito_hw.service;
 
 import com.skypro.employees_mockito_hw.Employee;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,6 +39,17 @@ class DepartmentServiceTest {
         actualEmployees.add(employee1);
         actualEmployees.add(employee2);
         actualEmployees.add(employee3);
+    }
+
+    @AfterEach
+    public void resetSettings() {
+        Iterator<Employee> employeeIter = expectedEmployees.iterator();
+        while (employeeIter.hasNext()) {
+            Employee employee = employeeIter.next();
+            if (!(employee == null)) {
+                employeeIter.remove();
+            }
+        }
     }
 
     @Test
@@ -110,11 +123,11 @@ class DepartmentServiceTest {
     @Test
     void whenCollectionIsEmpty() {
 
-        when(employeeServiceMock.getAllEmployees()).thenReturn(actualEmployees);
-
         actualEmployees.remove(employee1);
         actualEmployees.remove(employee2);
         actualEmployees.remove(employee3);
+
+        when(employeeServiceMock.getAllEmployees()).thenReturn(actualEmployees);
 
         Employee expected = null;
         Employee actual = out.maxSalary(1);
@@ -136,11 +149,11 @@ class DepartmentServiceTest {
     @Test
     void allEmployeesByDeps() {
 
-        when(employeeServiceMock.getAllEmployees()).thenReturn(actualEmployees);
-
         expectedEmployees.add(employee1);
         expectedEmployees.add(employee2);
         expectedEmployees.add(employee3);
+
+        when(employeeServiceMock.getAllEmployees()).thenReturn(actualEmployees);
 
         Map<Integer, List<Employee>> expected = expectedEmployees.stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment));

@@ -40,7 +40,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee removeEmployee(String lastName, String firstName, int department, int salary) {
         validateInput(firstName, lastName);
 
-        Employee employee = new Employee(lastName, firstName, salary, department);
+        Employee employee = new Employee(lastName, firstName, department, salary);
+
         if (employees.contains(employee)) {
             employees.remove(employee);
             return employee;
@@ -52,9 +53,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee findEmployee(String lastName, String firstName, int department, int salary) {
         validateInput(firstName, lastName);
 
-        Employee employee = new Employee(lastName, firstName, salary, department);
+        Employee employee = new Employee(lastName, firstName, department, salary);
         if (employees.contains(employee)) {
-            System.out.println("1");
             return employee;
         }
         throw new EmployeeNotFoundException();
